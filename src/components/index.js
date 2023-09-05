@@ -4,6 +4,7 @@ import FormAbsen from "./FormAbsen";
 import HistoryAbsen from "./HistoryAbsen";
 import FormProfil from "./FormProfil";
 import RIwayatInHome from "./RIwayatInHome";
+import ItemHeader from "./ItemHeader";
 
 export { 
     BottomNavigation,
@@ -11,5 +12,6 @@ export {
     FormAbsen,
     HistoryAbsen,
     FormProfil,
-    RIwayatInHome
+    RIwayatInHome,
+    ItemHeader
     }

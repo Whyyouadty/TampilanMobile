@@ -5,6 +5,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { BottomNavigation } from "../components";
 import { Home, Splash, Absen, Rekap, Lokasi, Profil } from "../pages";
+import HomeScreen from '../components/ItemHeader'; // Sesuaikan dengan path ke ItemHeader.js
+import ProfilScreen from '../pages/Profil'; // Sesuaikan dengan path ke Profil/index.js
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -18,7 +20,7 @@ const MainApp = () => {
       <Tab.Screen
         name="Rekap"
         component={Rekap}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, tabBarLabel: 'Rekap' }}
       />
       <Tab.Screen
         name="Absen"
@@ -38,7 +40,7 @@ const MainApp = () => {
       <Tab.Screen
         name="Profil"
         component={Profil}
-        options={{ headerShown: false }}
+        options={{ headerShown: false, tabBarLabel: 'Profil' }}
       />
     </Tab.Navigator>
   );

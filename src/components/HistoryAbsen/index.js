@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Dimensions, StyleSheet, Text, View, FlatList } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 
@@ -270,7 +270,6 @@ const styles = StyleSheet.create({
   headerText: {
     color: "#B8B6B6",
     fontSize: 18,
-    fontWeight: "bold",
   },
   filterContainer: {
     backgroundColor: "#B8B6B6",
@@ -318,13 +317,11 @@ const styles = StyleSheet.create({
   absenCountText1:{
     fontSize: 15,
     color: '#fff',
-    fontWeight: "bold",
     marginRight: 35,
   },
   absenCountText2:{
     fontSize: 15,
     color: '#fff',
-    fontWeight: "bold",
     marginLeft: 35,
   }
 });

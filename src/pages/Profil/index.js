@@ -28,6 +28,6 @@ const styles = StyleSheet.create({
     color: "#fff",
     marginTop: windowHeight*0.07,
     fontSize: 30,
-    fontWeight: "900",
+    fontWeight: "bold",
   }
 });
