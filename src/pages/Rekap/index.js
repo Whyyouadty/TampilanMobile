@@ -1,10 +1,7 @@
 import React from "react";
-import { Dimensions, ImageBackground, StyleSheet, Text, View } from "react-native";
-import { Splashbackground } from "../../asset";
+import { Dimensions, StyleSheet, Text, View } from "react-native";
 import { HistoryAbsen } from "../../components";
 import { LinearGradient } from "expo-linear-gradient";
-
-
 
 const Rekap = () => {
   return (
@@ -28,6 +25,5 @@ const styles = StyleSheet.create({
     color: "#fff",
     marginTop: windowHeight*0.07,
     fontSize: 30,
-    fontWeight: "900",
   },
 });

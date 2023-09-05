@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
     color: "#fff",
     marginTop: windowHeight*0.07,
     fontSize: 30,
-    fontWeight: "900",
   },
   dt: {
     alignItems: "center",
@@ -62,12 +61,10 @@ const styles = StyleSheet.create({
     color: "#fff",
     marginTop: 55,
     fontSize: 30,
-    fontWeight: "600",
   },
   date: {
     color: "#fff",
     fontSize: 20,
-    fontWeight: "100",
   },
 });
 
