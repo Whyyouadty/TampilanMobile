@@ -15,7 +15,7 @@ import * as ImagePicker from "expo-image-picker";
 
 const FormProfil = () => {
   const [isEditingIndex, setIsEditingIndex] = useState(null);
-  const [imageSelected, setImageSelected] = useState(false); // State untuk menandakan apakah gambar telah terpilih
+  const [imageSelected, setImageSelected] = useState(false);
   const [selectedImage, setSelectedImage] = useState(Foto);
 
   const [bioData, setBioData] = useState([
@@ -94,22 +94,6 @@ const FormProfil = () => {
               ) : (
                 <Text style={styles.bioText}>{data.value}</Text>
               )}
-              <TouchableOpacity
-                style={styles.editButton}
-                onPress={() => {
-                  if (isEditingIndex === index) {
-                    handleSavePress(index);
-                  } else {
-                    handleEditPress(index);
-                  }
-                }}
-              >
-                <FontAwesome
-                  name={isEditingIndex === index ? "check" : "pencil"}
-                  size={10}
-                  color="#fff"
-                />
-              </TouchableOpacity>
             </View>
           ))}
         </View>

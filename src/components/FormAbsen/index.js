@@ -5,56 +5,13 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Image,
 } from "react-native";
-import * as ImagePicker from "expo-image-picker";
-import { IconImage } from "../../asset";
-
 const FormAbsen = () => {
-  const [image, setImage] = useState(null);
-  const [isImageReady, setIsImageReady] = useState(false);
-
-  const openCameraFromLogo = async () => {
-    let result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
-      setIsImageReady(true);
-    }
-  };
-
-  const clearImage = () => {
-    setImage(null);
-    setIsImageReady(false);
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.context}>
         <Text style={styles.Text}>FormAbsen</Text>
       </View>
-      <View style={styles.perintah}>
-        <Text style={styles.textperintah}>
-          Klik di bawah ini untuk membuka kamera
-        </Text>
-      </View>
-      <TouchableOpacity
-        onPress={openCameraFromLogo}
-        style={styles.imageContainer}
-      >
-        <Image source={IconImage} style={styles.logo} />
-      </TouchableOpacity>
-      {isImageReady ? (
-        <View style={styles.cons}>
-          <Text style={styles.imageReadyText}>Gambar telah siap</Text>
-          <TouchableOpacity style={styles.clearBtn} onPress={clearImage}>
-            <Text style={styles.clearBtnText}>Reset</Text>
-          </TouchableOpacity>
-        </View>
-      ) : null}
       <View style={styles.btn}>
         <TouchableOpacity style={styles.btnin}>
           <Text style={styles.textin}>Clock In</Text>
@@ -75,7 +32,7 @@ const styles = StyleSheet.create({
     marginTop: windowHeight * 0.03,
     backgroundColor: "#fff",
     width: windowWidth * 0.8,
-    height: windowHeight * 0.3,
+    height: windowHeight * 0.23,
     borderRadius: 20,
     alignItems: "center",
     shadowColor: "#000",
@@ -100,32 +57,16 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 15,
   },
-  perintah: {
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop:  windowHeight * 0.02,
-  },
-  textperintah: {
-    color: "#A4ADBF",
-  },
-  imageContainer: {
-    alignItems: "center",
-  },
-  logo: {
-    width: windowWidth * 0.1,
-    height: windowHeight * 0.1,
-    resizeMode: "contain",
-  },
   btn: {
     flexDirection: "row",
-    marginVertical: windowHeight * 0.24,
+    marginVertical: windowHeight * 0.11,
     position: "absolute",
   },
   btnin: {
     backgroundColor: "#2396F2",
-    marginRight: windowWidth * 0.15,
+    marginRight: windowWidth * 0.1,
     width: windowWidth * 0.2,
-    height: windowHeight * 0.04,
+    height: windowHeight * 0.05,
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
@@ -136,9 +77,9 @@ const styles = StyleSheet.create({
   },
   btnout: {
     backgroundColor: "#F64E60",
-    marginLeft: windowWidth * 0.15,
+    marginLeft: windowWidth * 0.1,
     width: windowWidth * 0.2,
-    height: windowHeight * 0.04,
+    height: windowHeight * 0.05,
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
@@ -146,23 +87,6 @@ const styles = StyleSheet.create({
   textout: {
     fontSize: 15,
     color: "#fff",
-  },
-  cons: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  imageReadyText: {
-    fontSize: 15,
-    color: "green",
-  },
-  clearBtn: {
-    marginTop: windowWidth * 0.02,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  clearBtnText: {
-    fontSize: 18,
-    color: "#F64E60",
   },
 });
 

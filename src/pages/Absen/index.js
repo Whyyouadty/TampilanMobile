@@ -6,16 +6,7 @@ import { FormAbsen } from "../../components";
 
 const Absen = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
+  
 
   const formattedTime = currentTime.toLocaleTimeString([], {
     hour: "2-digit",

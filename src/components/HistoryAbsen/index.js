@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Dimensions, StyleSheet, Text, View, FlatList } from "react-native";
 import { Picker } from "@react-native-picker/picker";
+import { useRekapContext } from '../../stores/RekapContextState'
 
 const HistoryAbsen = () => {
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
