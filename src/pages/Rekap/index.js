@@ -12,21 +12,21 @@ const Rekap = () => {
     
     const serverUrl = 'http://192.168.102.130:8000/api/w1/kehadiran';
 
-    fetch(serverUrl)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json(); // Mengubah respons ke dalam format JSON
-    })
-    .then(data => {
-      console.log('Data:', data.data);
-      const kehadiranData = data.data 
-      setKehadiranList(kehadiranData)
-    })
-    .catch(error => {
-      console.error('Error fetching data:', error);
-    });
+    // fetch(serverUrl)
+    // .then(response => {
+    //   if (!response.ok) {
+    //     throw new Error(`HTTP error! Status: ${response.status}`);
+    //   }
+    //   return response.json(); // Mengubah respons ke dalam format JSON
+    // })
+    // .then(data => {
+    //   console.log('Data:', data.data);
+    //   const kehadiranData = data.data 
+    //   setKehadiranList(kehadiranData)
+    // })
+    // .catch(error => {
+    //   console.error('Error fetching data:', error);
+    // });
 
   }
 

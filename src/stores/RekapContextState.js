@@ -12,16 +12,10 @@ export const RekapContextProvider = ({ children }) => {
     //CTH: MENGISI ATAU MENGUBAH DATA KEHADIRAN PAKAI setKehadiranList(data dari kehadiran)
 
     const [getKehadiranList, setKehadiranList] = useState([]) // DALAM BUKA TUTUP KURUNG () TERDAPAT NILAI DEFAULT
-    const [getProfile, setProfile] = useState({
-        nama: "wahyu",
-        ket: "biji nangka"
-    }) // DALAM BUKA TUTUP KURUNG () TERDAPAT NILAI DEFAULT
 
     const initialState = {
         getKehadiranList,
-        setKehadiranList,
-        getProfile,
-        setProfile
+        setKehadiranList
     };
 
     //INI TEMPAT MUNCUL DARI NAMA DIATAS
