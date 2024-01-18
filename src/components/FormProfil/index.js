@@ -1,4 +1,4 @@
-import React, { useState, useEffect  } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Dimensions,
   StyleSheet,
@@ -6,58 +6,60 @@ import {
   View,
   Image,
   TextInput,
-  TouchableOpacity,
   ScrollView,
 } from "react-native";
-import { Foto } from "../../asset";
-import { FontAwesome } from "@expo/vector-icons";
-import * as ImagePicker from "expo-image-picker";
+import { useProfilContext } from "../../stores/ProfilContextState";
+import { baseUrl, token } from "../../utils/fetchConfig";
 
 const FormProfil = () => {
-  const [isEditingIndex, setIsEditingIndex] = useState(null);
-  const [imageSelected, setImageSelected] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(Foto);
+  const { getProfilList, setProfilList } = useProfilContext();
+  const [isLoadingFoto, setIsLoadingFoto] = useState(true);
 
-  const [bioData, setBioData] = useState([
-    { label: "akun", value: "Adty_Why10" },
-    { label: "Nama", value: "Aditya wahyu syaputra" },
-    { label: "NIDN", value: "13308828826" },
-    { label: "Departement", value: "Prodi teknik informatika" },
-    { label: "Jabatan", value: "Ketua" },
-    { label: "TTL", value: "Palu 10 Oktober 2001" },
-    { label: "alamat", value: "Jalan Karanjalembah" },
-    { label: "agama", value: "Islam" },
-    { label: "jk", value: "Laki-Laki" },
-    { label: "no hp", value: "+6282296069924" },
-  ]);
+  const fetchData = async (url, memberToken) => {
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${memberToken}`,
+          Accept: "application/json",
+        },
+      });
 
-  const pickImageAsync = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: true,
-      quality: 1,
-    });
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
 
-    if (!result.canceled) {
-      setSelectedImage(result.uri);
-      setImageSelected(true);
-    } else {
-      alert("You did not select any image.");
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error fetching data:", error.message);
+      throw error;
     }
   };
 
-  const handleEditPress = (index) => {
-    setIsEditingIndex(index);
-  };
-
-  const handleSavePress = (index) => {
-    // Simpan perubahan ke data yang sesuai
-    const updatedBioData = [...bioData];
-    updatedBioData[index].value = bioData[index].tempValue;
-    setBioData(updatedBioData);
-
-    // Keluar dari mode editing
-    setIsEditingIndex(null);
-  };
+  useEffect(() => {
+    fetchData(`${baseUrl}/mob/profile/`, token)
+      .then((data) => {
+        const resData = data.data;
+        setProfilList({
+          foto: resData.foto,
+          nama: resData.nama,
+          nidn: resData.nidn,
+          departement_name: resData.departement.nama_departement,
+          jabatan_name: resData.jabatan.nama_jabatan,
+          ttl: resData.ttl,
+          alamat: resData.alamat,
+          agama: resData.agama,
+          jk: resData.jk,
+          no_hp: resData.no_hp,
+        });
+        setIsLoadingFoto(false);
+      })
+      .catch((error) => {
+        setIsLoadingFoto(false);
+        console.error("Terjadi error:", error.message);
+      });
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -66,36 +68,83 @@ const FormProfil = () => {
           <Text style={styles.textcontainer}>Info</Text>
           <Text style={styles.textcontainer2}>karyawan</Text>
         </View>
-        <TouchableOpacity onPress={pickImageAsync}>
-          {imageSelected ? (
-            <Image source={{ uri: selectedImage }} style={styles.foto} />
-          ) : (
-            <Image source={Foto} style={styles.foto} />
-          )}
-        </TouchableOpacity>
+        {isLoadingFoto ? (
+          <Text>Loading...</Text>
+        ) : (
+          <Image
+            style={styles.foto}
+            source={{ uri: getProfilList.foto }}
+          />
+        )}
       </View>
       <ScrollView
         style={styles.ScrollView}
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.bio}>
-          {bioData.map((data, index) => (
-            <View key={index} style={styles.textInputContainer}>
-              {isEditingIndex === index ? (
-                <TextInput
-                  style={styles.editInput}
-                  onChangeText={(text) => {
-                    const updatedBioData = [...bioData];
-                    updatedBioData[index].tempValue = text;
-                    setBioData(updatedBioData);
-                  }}
-                  value={bioData[index].tempValue}
-                />
-              ) : (
-                <Text style={styles.bioText}>{data.value}</Text>
-              )}
-            </View>
-          ))}
+          <View style={styles.textInputContainer}>
+            <TextInput
+              value={getProfilList.nama}
+              editable={false}
+              style={styles.editInput}
+            />
+          </View>
+          <View style={styles.textInputContainer}>
+            <TextInput
+              value={getProfilList.nidn}
+              editable={false}
+              style={styles.editInput}
+            />
+          </View>
+          <View style={styles.textInputContainer}>
+            <TextInput
+              value={getProfilList.departement_name}
+              editable={false}
+              style={styles.editInput}
+            />
+          </View>
+          <View style={styles.textInputContainer}>
+            <TextInput
+              value={getProfilList.jabatan_name}
+              editable={false}
+              style={styles.editInput}
+            />
+          </View>
+          <View style={styles.textInputContainer}>
+            <TextInput
+              value={getProfilList.ttl}
+              editable={false}
+              style={styles.editInput}
+            />
+          </View>
+          <View style={styles.textInputContainer}>
+            <TextInput
+              value={getProfilList.alamat}
+              editable={false}
+              style={styles.editInput}
+            />
+          </View>
+          <View style={styles.textInputContainer}>
+            <TextInput
+              value={getProfilList.agama}
+              editable={false}
+              style={styles.editInput}
+            />
+          </View>
+          <View style={styles.textInputContainer}>
+            <TextInput
+              value={getProfilList.jk}
+              editable={false}
+              style={styles.editInput}
+            />
+          </View>
+          <View style={styles.textInputContainer}>
+            <TextInput
+              value={getProfilList.no_hp}
+              editable={false}
+              style={styles.editInput}
+            />
+          </View>
         </View>
       </ScrollView>
     </View>
@@ -128,7 +177,7 @@ const styles = StyleSheet.create({
   },
   Text: {
     paddingRight: windowWidth * 0.11,
-    paddingTop: -windowHeight * 0.01
+    paddingTop: -windowHeight * 0.01,
   },
   textcontainer: {
     fontSize: 25,
@@ -147,8 +196,8 @@ const styles = StyleSheet.create({
     marginTop: windowHeight * 0.035,
   },
   textInputContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: "column",
+    justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#fff",
     borderRadius: 10,
@@ -157,15 +206,10 @@ const styles = StyleSheet.create({
     height: 45,
     margin: 5,
   },
-  bioText: {
-    fontSize: 16,
-    margin: 10,
-    color: "#666C82",
-  },
   editInput: {
     fontSize: 16,
     color: "#666C82",
-    paddingHorizontal: 10,
+    paddingHorizontal: 1,
     width: 200,
   },
   editButton: {

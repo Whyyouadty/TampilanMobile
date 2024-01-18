@@ -10,7 +10,7 @@ const Rekap = () => {
 
   const getKehadiran = async () => {
     
-    const serverUrl = 'http://192.168.102.130:8000/api/w1/kehadiran';
+    const serverUrl = 'http://192.168.249.130:8000/api/w1/kehadiran';
 
     // fetch(serverUrl)
     // .then(response => {

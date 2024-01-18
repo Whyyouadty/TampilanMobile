@@ -5,10 +5,13 @@ import {
   TouchableOpacity,
   View,
   Image,
+  FlatList,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { pp } from "../../asset";
 import { useNavigation } from "@react-navigation/native";
+import { useRekapContext } from "../../stores/RekapContextState";
+import { baseUrl, token } from "../../utils/fetchConfig";
 
 const RiwayatInHome = () => {
   const navigation = useNavigation();
@@ -16,6 +19,45 @@ const RiwayatInHome = () => {
   const navigateToRekap = () => {
     navigation.navigate("Rekap");
   };
+
+  const { getKehadiranList, setKehadiranList } = useRekapContext();
+
+  const fetchData = async (url, memberToken) => {
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${memberToken}`,
+          Accept: "application/json",
+          // Tambahkan header lain sesuai kebutuhan
+        },
+        // Jika menggunakan metode selain GET, Anda dapat menambahkan body di sini
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error fetching data:", error.message);
+      throw error; // Anda bisa menangani error sesuai kebutuhan
+    }
+  };
+
+  useEffect(() => {
+    fetchData(`${baseUrl}/mob/absensi/history`, token)
+      .then((data) => {
+        const resData = data.data;
+        setKehadiranList(resData);
+        console.log(resData);
+      })
+      .catch((error) => {
+        // Tangani error jika diperlukan
+        console.error("Terjadi error:", error.message);
+      });
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -26,30 +68,27 @@ const RiwayatInHome = () => {
         </TouchableOpacity>
       </View>
       <View style={styles.containercard}>
-        <View style={styles.card}>
-          <View style={styles.cardheader}>
-            <Text style={styles.textheadercard1}>Clock In</Text>
-          </View>
-          <View style={styles.cardbody}>
-            <Image source={pp} style={styles.image} />
-            <View style={styles.datecontainer}>
-              <Text style={styles.textbodycarddate}>Sen 10 Okt 2023</Text>
-              <Text style={styles.textbodycardtime}>08:00 AM</Text>
+        <FlatList
+          data={getKehadiranList}
+          renderItem={({ item }) => (
+            <View style={styles.card}>
+              <View style={styles.cardheader}>
+                <Text style={styles.textheadercard1}>working time</Text>
+              </View>
+              <View style={styles.cardbody}>
+                <Image source={pp} style={styles.image} />
+                <View style={styles.datecontainer}>
+                  <Text style={styles.textbodycarddate}>{item.tanggal}</Text>
+                  <Text style={styles.textbodycardtime}>
+                    {item.jam_masuk} - {item.jam_keluar}
+                  </Text>
+                  <Text style={styles.textbodycardtime}>{item.status}</Text>
+                </View>
+              </View>
             </View>
-          </View>
-        </View>
-        <View style={styles.card}>
-          <View style={styles.cardheader}>
-            <Text style={styles.textheadercard2}>Clock Out</Text>
-          </View>
-          <View style={styles.cardbody}>
-            <Image source={pp} style={styles.image} />
-            <View style={styles.datecontainer}>
-              <Text style={styles.textbodycarddate}>Sen 10 Okt 2023</Text>
-              <Text style={styles.textbodycardtime}>04:00 PM</Text>
-            </View>
-          </View>
-        </View>
+          )}
+          keyExtractor={(item) => item.id.toString()}
+        />
       </View>
     </View>
   );
@@ -115,7 +154,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   datecontainer: {
-    paddingLeft: windowWidth * 0.02,
+    paddingLeft: windowWidth * 0.05,
   },
   textbodycarddate: {
     fontSize: 17,

@@ -1,23 +1,26 @@
 import { Dimensions, ImageBackground, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { Splashbackground } from "../../asset";
 import { FormProfil } from "../../components";
 import { LinearGradient } from "expo-linear-gradient";
+import { ProfilContextProvider } from '../../stores/ProfilContextState'
 
 
 
 const Profil = () => {
+
   return (
-    <LinearGradient colors={["#2396F2", "#ffffff"]} style={styles.container}>
-      <Text style={styles.textcontainer}>Profil</Text>
-      <FormProfil></FormProfil>
-    </LinearGradient>
+    <ProfilContextProvider>
+      <LinearGradient colors={["#2396F2", "#ffffff"]} style={styles.container}>
+        <Text style={styles.textcontainer}>Profil</Text>
+        <FormProfil></FormProfil>
+      </LinearGradient>
+    </ProfilContextProvider>
   );
 };
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-export default Profil;
 
 const styles = StyleSheet.create({
   container: {
@@ -31,3 +34,5 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   }
 });
+
+export default Profil;
