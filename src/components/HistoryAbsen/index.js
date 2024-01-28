@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Dimensions, StyleSheet, Text, View, FlatList } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { useRekapContext } from '../../stores/RekapContextState'
-import { baseUrl, token } from '../../utils/fetchConfig'
+import { baseUrl } from '../../utils/fetchConfig'
 
 const HistoryAbsen = () => {
 
@@ -38,18 +38,18 @@ const HistoryAbsen = () => {
     }
   };
 
-  useEffect(() => {
-
-    fetchData(`${baseUrl}/mob/absensi/history`, token)
-    .then(data => {
-      const resData = data.data
-      setKehadiranList(resData)
-      console.log(resData)
-    })
-    .catch(error => {
-      // Tangani error jika diperlukan
-      console.error('Terjadi error:', error.message);
-    });
+  useEffect( async () => {
+    const token = await getData()
+    // fetchData(`${baseUrl}/mob/absensi/history`, token)
+    // .then(data => {
+    //   const resData = data.data
+    //   setKehadiranList(resData)
+    //   console.log(resData)
+    // })
+    // .catch(error => {
+    //   // Tangani error jika diperlukan
+    //   console.error('Terjadi error:', error.message);
+    // });
     
   }, [])
 

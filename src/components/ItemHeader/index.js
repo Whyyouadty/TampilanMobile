@@ -1,10 +1,11 @@
-import { StyleSheet, Text, View, Image, TextInput, Dimensions, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Image, TextInput, Dimensions, TouchableOpacity, Pressable } from "react-native";
 import { Logoo, Foto } from "../../asset";
 import React, { useState, useEffect  } from "react";
 import { useNavigation } from '@react-navigation/native';
 import { RFValue } from "react-native-responsive-fontsize";
 import { useProfilContext } from '../../stores/ProfilContextState'
-import { baseUrl, token } from '../../utils/fetchConfig'
+import { baseUrl } from '../../utils/fetchConfig'
+import {getData, clearData} from "../../utils/auth"
 
 const ItemHeader = () => {
   const navigation = useNavigation();
@@ -15,12 +16,13 @@ const ItemHeader = () => {
 
   const { getProfilList, setProfilList } = useProfilContext()
 
-  const fetchData = async (url, memberToken) => {
+  const fetchData = async (url) => {
+    const token = await getData()
     try {
       const response = await fetch(url, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${memberToken}`,
+          'Authorization': `Bearer ${token}`,
           'Accept': 'application/json'
           // Tambahkan header lain sesuai kebutuhan
         },
@@ -39,15 +41,21 @@ const ItemHeader = () => {
     }
   };
 
-  useEffect(() => {
+  const logOut = async () => {
+    await clearData()
+    navigation.navigate("Splash")
+  }
 
-    fetchData(`${baseUrl}/mob/profile/`, token)
+  useEffect(() => {
+    fetchData(`${baseUrl}/mob/profile/`)
     .then(data => {
       const resData = data.data
-      setProfilList({
-        foto: resData.foto,
-        nama: resData.nama,
-      })
+      if (resData) {
+        setProfilList({
+          foto: resData.foto,
+          nama: resData.nama,
+        })
+      }
       console.log(resData)
       
     })
@@ -81,7 +89,9 @@ const ItemHeader = () => {
             style={styles.nama}
           />
         </View>
-
+        <Pressable onPress={() => {logOut()}}>
+          <Text style={{color: "white"}}>Logout</Text>
+        </Pressable>
       </View>
     </View>
   );

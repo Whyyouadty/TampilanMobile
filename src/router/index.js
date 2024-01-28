@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { BottomNavigation } from "../components";
-import { Home, Splash, Absen, Rekap, Lokasi, Profil } from "../pages";
+import { Home, Splash, Absen, Rekap, Lokasi, Profil, Login } from "../pages";
 import HomeScreen from '../components/ItemHeader'; // Sesuaikan dengan path ke ItemHeader.js
 import ProfilScreen from '../pages/Profil'; // Sesuaikan dengan path ke Profil/index.js
 
@@ -55,6 +55,11 @@ const Router = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{ headerShown: false }}
+      />
+       <Stack.Screen
         name="MainApp"
         component={MainApp}
         options={{ headerShown: false }}

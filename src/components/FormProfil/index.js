@@ -9,7 +9,7 @@ import {
   ScrollView,
 } from "react-native";
 import { useProfilContext } from "../../stores/ProfilContextState";
-import { baseUrl, token } from "../../utils/fetchConfig";
+import { baseUrl } from "../../utils/fetchConfig";
 
 const FormProfil = () => {
   const { getProfilList, setProfilList } = useProfilContext();
@@ -37,28 +37,29 @@ const FormProfil = () => {
     }
   };
 
-  useEffect(() => {
-    fetchData(`${baseUrl}/mob/profile/`, token)
-      .then((data) => {
-        const resData = data.data;
-        setProfilList({
-          foto: resData.foto,
-          nama: resData.nama,
-          nidn: resData.nidn,
-          departement_name: resData.departement.nama_departement,
-          jabatan_name: resData.jabatan.nama_jabatan,
-          ttl: resData.ttl,
-          alamat: resData.alamat,
-          agama: resData.agama,
-          jk: resData.jk,
-          no_hp: resData.no_hp,
-        });
-        setIsLoadingFoto(false);
-      })
-      .catch((error) => {
-        setIsLoadingFoto(false);
-        console.error("Terjadi error:", error.message);
-      });
+  useEffect( async () => {
+    const token = await getData()
+    // fetchData(`${baseUrl}/mob/profile/`, token)
+    //   .then((data) => {
+    //     const resData = data.data;
+    //     setProfilList({
+    //       foto: resData.foto,
+    //       nama: resData.nama,
+    //       nidn: resData.nidn,
+    //       departement_name: resData.departement.nama_departement,
+    //       jabatan_name: resData.jabatan.nama_jabatan,
+    //       ttl: resData.ttl,
+    //       alamat: resData.alamat,
+    //       agama: resData.agama,
+    //       jk: resData.jk,
+    //       no_hp: resData.no_hp,
+    //     });
+    //     setIsLoadingFoto(false);
+    //   })
+    //   .catch((error) => {
+    //     setIsLoadingFoto(false);
+    //     console.error("Terjadi error:", error.message);
+    //   });
   }, []);
 
   return (

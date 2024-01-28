@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Dimensions, FlatList } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useRekapContext } from "../../stores/RekapContextState";
-import { baseUrl, token } from "../../utils/fetchConfig";
+import { baseUrl } from "../../utils/fetchConfig";
 
 const Absen = () => {
   const { getKehadiranList, setKehadiranList } = useRekapContext();
@@ -31,6 +31,7 @@ const Absen = () => {
 
   const fetchDataAndUpdate = async () => {
     try {
+      const token = await getData()
       setIsRefreshing(true);
       const data = await fetchData(`${baseUrl}/mob/absensi/history`, token);
       const resData = data.data;
@@ -45,7 +46,7 @@ const Absen = () => {
   };
 
   useEffect(() => {
-    fetchDataAndUpdate();
+    // fetchDataAndUpdate();
   }, []);
 
   return (

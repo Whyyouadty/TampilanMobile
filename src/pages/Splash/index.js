@@ -1,12 +1,30 @@
 import React, { useEffect } from "react";
 import { ImageBackground, StyleSheet, Text, View, Image } from "react-native";
 import { Logo, Splashbackground } from "../../asset/";
+import { getData } from "../../utils/auth"
 
 const Splash = ({ navigation }) => {
   useEffect(() => {
-    setTimeout(() => {
-      navigation.replace("MainApp");
-    }, 3000);
+    // setTimeout(() => {
+    //   navigation.replace("MainApp");
+    // }, 3000);
+
+    getData()
+      .then((res) => {
+        if (!res) {
+          setTimeout(() => {
+            navigation.replace("Login");
+          }, 3000);
+        } else {
+          setTimeout(() => {
+            navigation.replace("MainApp");
+          }, 3000);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+
   }, [navigation]);
 
   return (

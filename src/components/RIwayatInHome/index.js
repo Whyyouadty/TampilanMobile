@@ -11,7 +11,7 @@ import React, { useState, useEffect } from "react";
 import { pp } from "../../asset";
 import { useNavigation } from "@react-navigation/native";
 import { useRekapContext } from "../../stores/RekapContextState";
-import { baseUrl, token } from "../../utils/fetchConfig";
+import { baseUrl } from "../../utils/fetchConfig";
 
 const RiwayatInHome = () => {
   const navigation = useNavigation();
@@ -46,17 +46,18 @@ const RiwayatInHome = () => {
     }
   };
 
-  useEffect(() => {
-    fetchData(`${baseUrl}/mob/absensi/history`, token)
-      .then((data) => {
-        const resData = data.data;
-        setKehadiranList(resData);
-        console.log(resData);
-      })
-      .catch((error) => {
-        // Tangani error jika diperlukan
-        console.error("Terjadi error:", error.message);
-      });
+  useEffect( async () => {
+    const token = await getData()
+    // fetchData(`${baseUrl}/mob/absensi/history`, token)
+    //   .then((data) => {
+    //     const resData = data.data;
+    //     setKehadiranList(resData);
+    //     console.log(resData);
+    //   })
+    //   .catch((error) => {
+    //     // Tangani error jika diperlukan
+    //     console.error("Terjadi error:", error.message);
+    //   });
   }, []);
 
   return (

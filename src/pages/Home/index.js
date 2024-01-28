@@ -11,8 +11,8 @@ const Home = () => {
       <ProfilContextProvider>
         <LinearGradient colors={["#2396F2", "#ffffff"]} style={styles.Home}>
           <ItemHeader></ItemHeader>
-          <TimeAbsen></TimeAbsen>
-          <RIwayatInHome></RIwayatInHome>
+          {/* <TimeAbsen></TimeAbsen>
+          <RIwayatInHome></RIwayatInHome> */}
         </LinearGradient>
       </ProfilContextProvider>
     </RekapContextProvider>
