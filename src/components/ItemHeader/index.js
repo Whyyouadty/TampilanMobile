@@ -17,8 +17,9 @@ const ItemHeader = () => {
   const { getProfilList, setProfilList } = useProfilContext()
 
   const fetchData = async (url) => {
-    const token = await getData()
     try {
+      const token = await getData();
+  
       const response = await fetch(url, {
         method: 'GET',
         headers: {
@@ -30,6 +31,10 @@ const ItemHeader = () => {
       });
   
       if (!response.ok) {
+        if (response.status === 401) {
+          await clearData();
+          navigation.navigate("Login");
+        }
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
   

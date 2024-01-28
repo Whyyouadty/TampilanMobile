@@ -3,6 +3,7 @@ import { Dimensions, ImageBackground, StyleSheet, Text, View } from "react-nativ
 import { Splashbackground } from "../../asset";
 import { LinearGradient } from "expo-linear-gradient";
 import { FormAbsen } from "../../components";
+import { AbsenContextProvider } from "../../stores/AbsenContextState"
 
 const Absen = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -27,7 +28,9 @@ const Absen = () => {
         <Text style={styles.time}>{formattedTime}</Text>
         <Text style={styles.date}>{formattedDate}</Text>
       </View>
-      <FormAbsen></FormAbsen>
+      <AbsenContextProvider>
+        <FormAbsen></FormAbsen>
+      </AbsenContextProvider>
     </LinearGradient>
   );
 };
